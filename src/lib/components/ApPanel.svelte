@@ -1,5 +1,8 @@
 <script>
+  /** @type {boolean | null} */
   export let apState = null;
+
+  /** @type {() => Promise<void>} */
   export let Toggle = async () => {};
 </script>
 
