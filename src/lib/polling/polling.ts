@@ -8,7 +8,6 @@ export const lanProfiles = writable<any[]>([]);
 export const wanConnections = writable<any[]>([]);
 export const wanAllowances = writable<any[]>([]);
 
-// Gets AP state
 export const pollApState = async () => {
   const data = await apiGet(endpoints.ap);
   apState.set(data?.response?.enable ?? null);
@@ -19,7 +18,6 @@ export const pollClients = async () => {
   clients.set(data?.response?.list ?? []);
 };
 
-// Gets LAN profiles
 export const pollLanProfiles = async () => {
   const data = await apiGet(endpoints.lanProfile);
   const response = data?.response ?? {};
@@ -44,7 +42,6 @@ export const pollLanProfiles = async () => {
   lanProfiles.set(parsed);
 };
 
-// Gets WAN connections
 export const pollWanConnections = async () => {
   const data = await apiGet(endpoints.wanConnection);
   const response = data?.response ?? {};
@@ -79,7 +76,6 @@ const getWanNameById = (wanId: string | number) => {
   return match?.name ?? `WAN ${wanId}`;
 };
 
-// Gets WAN allowance
 export const pollWanAllowances = async () => {
   const data = await apiGet(endpoints.wanAllowance);
   const response = data?.response ?? {};

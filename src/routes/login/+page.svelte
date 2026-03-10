@@ -32,9 +32,21 @@
     <div class="panel padding">
       <div class="welcome">Welcome</div>
       <form class="login-form" on:submit|preventDefault={authenticate}>
-        <input type="text" placeholder="Username" bind:value={username} required />
-        <input type="password" placeholder="Password" bind:value={password} required />
-        <button type="submit">Login</button>
+        <input
+          class="auth-control"
+          type="text"
+          placeholder="Username"
+          bind:value={username}
+          required
+        />
+        <input
+          class="auth-control"
+          type="password"
+          placeholder="Password"
+          bind:value={password}
+          required
+        />
+        <button class="auth-submit" type="submit">Login</button>
         <div class="padding error" class:hide={!showError}>{error}</div>
       </form>
     </div>
@@ -60,13 +72,7 @@
     flex-direction: column;
     gap: 0.75rem;
   }
-  input,
-  button {
-    min-width: 500px;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-  }
+
   .welcome {
     text-align: center;
     font-size: 50px;

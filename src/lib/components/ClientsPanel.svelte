@@ -1,13 +1,19 @@
-<script>
-  export let clients = [];
-  export let isClientOnline = (client) => {};
-  export let getClientStateLabel = (client) => {};
+<script lang="ts">
+  type Client = {
+    name?: string | null;
+    active?: boolean;
+    ip?: string | null;
+    connectionType?: string | null;
+  };
+
+  export let clients: Client[] = [];
 </script>
 
 <div class="panel">
   <h2>Clients</h2>
-  {#if clients.length === 0}
-    <div>No clients connected</div>
+
+  {#if !clients.length}
+    <div>Searching for clients...</div>
   {:else}
     <table class="clients-table">
       <thead>
@@ -21,18 +27,14 @@
       <tbody>
         {#each clients as client}
           <tr>
-            <td>{client.name ?? 'Unknown'}</td>
-            <td
-              ><div
-                class="pill"
-                class:on={isClientOnline(client)}
-                class:off={!isClientOnline(client)}
-              >
-                {getClientStateLabel(client)}
-              </div></td
-            >
-            <td>{client.ip ?? '-'}</td>
-            <td>{client.connectionType ?? '-'}</td>
+            <td>{client.name || 'Unknown'}</td>
+            <td>
+              <div class="pill" class:on={client.active} class:off={!client.active}>
+                {client.active ? 'online' : 'offline'}
+              </div>
+            </td>
+            <td>{client.ip || '-'}</td>
+            <td>{client.connectionType || '-'}</td>
           </tr>
         {/each}
       </tbody>
