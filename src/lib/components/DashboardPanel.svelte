@@ -3,7 +3,7 @@
 </script>
 
 <div class="header">
-  <h1>Dashboard</h1>
+  <h1>Dashboards</h1>
   <div class="actions">
     <button type="button" class="button button-strong panel" onclick={() => alert('Not done')}
       >Switch Theme</button
