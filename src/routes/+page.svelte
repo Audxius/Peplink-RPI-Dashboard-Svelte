@@ -46,17 +46,10 @@
 
 <DashboardPanel />
 <div class="row">
-  <div>
-    <WanConnectionsPanel wanConnections={$wanConnections} {getWanStatusKind} />
-    <ClientsPanel clients={$clients} />
-  </div>
-  <div>
-    <div class="row">
-      <ApPanel apState={$apState} Toggle={toggleApState} />
-      <RouterResetPanel {Reset} />
-    </div>
-
-    <LanProfilesPanel lanProfiles={$lanProfiles} />
-    <WanAllowancePanel wanAllowances={$wanAllowances} />
-  </div>
+  <ApPanel apState={$apState} Toggle={toggleApState} />
+  <RouterResetPanel {Reset} />
 </div>
+<ClientsPanel clients={$clients} />
+<WanConnectionsPanel wanConnections={$wanConnections} {getWanStatusKind} />
+<LanProfilesPanel lanProfiles={$lanProfiles} />
+<WanAllowancePanel wanAllowances={$wanAllowances} />
