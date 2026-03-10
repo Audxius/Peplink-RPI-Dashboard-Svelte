@@ -23,21 +23,10 @@ export const pollLanProfiles = async () => {
   const response = data?.response ?? {};
   const order: Array<string | number> = Array.isArray(response.order) ? response.order : [];
 
-  const parsed = order
-    .map((profileId) => {
-      const profile = response[String(profileId)];
-
-      if (!profile) {
-        return null;
-      }
-
-      return {
-        id: profileId,
-        ip: profile.ip ?? '-',
-        mask: profile.mask ?? '-'
-      };
-    })
-    .filter(Boolean);
+  const parsed = order.flatMap((id) => {
+    const profile = response[String(id)];
+    return profile ? [{ id, ip: profile.ip ?? '-', mask: profile.mask ?? '-' }] : [];
+  });
 
   lanProfiles.set(parsed);
 };
@@ -47,26 +36,23 @@ export const pollWanConnections = async () => {
   const response = data?.response ?? {};
   const order: Array<string | number> = Array.isArray(response.order) ? response.order : [];
 
-  const parsed = order
-    .map((connectionId) => {
-      const connection = response[String(connectionId)];
-
-      if (!connection) {
-        return null;
-      }
-
-      return {
-        id: connectionId,
-        name: connection.name ?? `WAN ${connectionId}`,
-        status: connection.message ?? '-',
-        enabled: connection.enable ?? false,
-        statusLed: connection.statusLed ?? '',
-        ip: connection.ip ?? '-',
-        type: connection.type ?? '-',
-        uptime: connection.uptime ?? 0
-      };
-    })
-    .filter(Boolean);
+  const parsed = order.flatMap((id) => {
+    const connection = response[String(id)];
+    return connection
+      ? [
+          {
+            id,
+            name: connection.name ?? `WAN ${id}`,
+            status: connection.message ?? '-',
+            enabled: connection.enable ?? false,
+            statusLed: connection.statusLed ?? '',
+            ip: connection.ip ?? '-',
+            type: connection.type ?? '-',
+            uptime: connection.uptime ?? 0
+          }
+        ]
+      : [];
+  });
 
   wanConnections.set(parsed);
 };
@@ -80,38 +66,24 @@ export const pollWanAllowances = async () => {
   const data = await apiGet(endpoints.wanAllowance);
   const response = data?.response ?? {};
   const order: Array<string | number> = Array.isArray(response.order) ? response.order : [];
-  const parsed = [];
 
-  for (const wanId of order) {
+  const parsed = order.flatMap((wanId) => {
     const entry = response[String(wanId)];
+    if (!entry || typeof entry !== 'object') return [];
 
-    if (!entry || typeof entry !== 'object') {
-      continue;
-    }
+    const wanName = getWanNameById(wanId);
 
     if (typeof entry.enable === 'boolean') {
-      parsed.push({
-        wanId,
-        wanName: getWanNameById(wanId),
-        target: '-',
-        enabled: entry.enable
-      });
-      continue;
+      return [{ wanId, wanName, target: '-', enabled: entry.enable }];
     }
 
-    for (const target of Object.keys(entry)) {
+    return Object.keys(entry).flatMap((target) => {
       const nested = entry[target];
-
-      if (nested && typeof nested.enable === 'boolean') {
-        parsed.push({
-          wanId,
-          wanName: getWanNameById(wanId),
-          target: `SIM ${target}`,
-          enabled: nested.enable
-        });
-      }
-    }
-  }
+      return nested && typeof nested.enable === 'boolean'
+        ? [{ wanId, wanName, target: `SIM ${target}`, enabled: nested.enable }]
+        : [];
+    });
+  });
 
   wanAllowances.set(parsed);
 };
