@@ -1,12 +1,21 @@
 import { get, writable } from 'svelte/store';
 import { apiGet } from '$lib/api/ApiPostGet';
 import { endpoints } from '$lib/api/endpoints';
+import { goto } from '$app/navigation';
 
 export const apState = writable<boolean | null>(null);
 export const clients = writable<any[]>([]);
 export const lanProfiles = writable<any[]>([]);
 export const wanConnections = writable<any[]>([]);
 export const wanAllowances = writable<any[]>([]);
+
+export const pollAccessControl = async () => {
+  const data = await apiGet(endpoints.client).catch(() => ({ stat: 'fail' }));
+
+  if (data.stat === 'fail') {
+    await goto('/login');
+  }
+};
 
 export const pollApState = async () => {
   const data = await apiGet(endpoints.ap);

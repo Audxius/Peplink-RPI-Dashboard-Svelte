@@ -14,17 +14,20 @@
     lanProfiles,
     wanConnections,
     wanAllowances,
+    pollAccessControl,
     pollApState,
     pollClients,
     pollLanProfiles,
     pollWanConnections,
     pollWanAllowances
   } from '$lib/polling/polling';
-  import { accessControl } from '$lib/components/AccessControl';
+  import RouterResetPanel from '$lib/components/RouterResetPanel.svelte';
+  import { Reset } from '$lib/components/RouterResetPanelData';
 
   const pollingIntervalMs = 5000;
 
   const pollers = [
+    pollAccessControl,
     pollApState,
     pollClients,
     pollLanProfiles,
@@ -33,8 +36,6 @@
   ];
 
   onMount(() => {
-    accessControl();
-
     pollers.forEach((poll) => void poll());
     const intervalIds = pollers.map((poll) => setInterval(poll, pollingIntervalMs));
     return () => {
@@ -50,7 +51,11 @@
     <ClientsPanel clients={$clients} />
   </div>
   <div>
-    <ApPanel apState={$apState} Toggle={toggleApState} />
+    <div class="row">
+      <ApPanel apState={$apState} Toggle={toggleApState} />
+      <RouterResetPanel {Reset} />
+    </div>
+
     <LanProfilesPanel lanProfiles={$lanProfiles} />
     <WanAllowancePanel wanAllowances={$wanAllowances} />
   </div>
