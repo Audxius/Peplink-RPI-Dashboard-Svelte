@@ -4,8 +4,8 @@
 </script>
 
 <div class="panel">
-  <h2>AP</h2>
-  <button class="button" class:on={apState} class:off={!apState} onclick={Toggle}>
+  <h2>Access Point</h2>
+  <button class="button small-padding" class:on={apState} class:off={!apState} onclick={Toggle}>
     {apState ? 'ON' : 'OFF'}
   </button>
 </div>

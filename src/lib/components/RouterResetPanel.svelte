@@ -4,5 +4,5 @@
 
 <div class="panel">
   <h2>Router reset</h2>
-  <button class="button off" onclick={Reset}>Reset</button>
+  <button class="button off small-padding" onclick={Reset}>Reset</button>
 </div>
