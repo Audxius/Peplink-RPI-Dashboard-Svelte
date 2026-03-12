@@ -2,6 +2,8 @@
   import { goto } from '$app/navigation';
   import { authenticate as runAuthenticate, username, password, error, showError } from './login';
 
+  let showPassword = false;
+
   const handleAuthenticate = async () => {
     await runAuthenticate(() => goto('/'));
   };
@@ -21,11 +23,15 @@
         />
         <input
           class="auth-control"
-          type="password"
+          type={showPassword ? 'text' : 'password'}
           placeholder="Password"
           bind:value={$password}
           required
         />
+        <label class="show-password-label" for="show-password">
+          <input type="checkbox" id="show-password" bind:checked={showPassword} />
+          Show password
+        </label>
         <button class="auth-submit" type="submit">Login</button>
         <div class="padding error" class:hide={!$showError}>{$error}</div>
       </form>

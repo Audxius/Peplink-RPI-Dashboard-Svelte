@@ -161,6 +161,44 @@ body {
   gap: 0.75rem;
 }
 
+.show-password-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  align-self: flex-start;
+  font-size: 1.2rem;
+  color: var(--text-main);
+  cursor: pointer;
+  user-select: none;
+}
+
+.show-password-label input[type='checkbox'] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #ccc;
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.show-password-label input[type='checkbox']:checked {
+  border-color: #4caf50;
+}
+
+.show-password-label input[type='checkbox']:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.3rem;
+  color: #4caf50;
+}
+
 .welcome {
   text-align: center;
   font-size: 50px;
