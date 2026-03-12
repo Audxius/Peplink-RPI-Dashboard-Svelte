@@ -1,4 +1,5 @@
 export const apiGet = async (path: string) => {
+  //GET call
   const response = await fetch(path, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
@@ -12,6 +13,7 @@ export const apiGet = async (path: string) => {
   return response.json();
 };
 
+//POST call
 export const apiPost = async (path: string, payload: any) => {
   const response = await fetch(path, {
     method: 'POST',

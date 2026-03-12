@@ -1,9 +1,4 @@
-type ClientLike = {
-  state?: string | null;
-  active?: boolean;
-};
+export const isClientOnline = (client: { active?: boolean }): boolean => Boolean(client?.active);
 
-export const isClientOnline = (client: ClientLike): boolean => Boolean(client?.active);
-
-export const getClientStateLabel = (client: ClientLike): string =>
-  client?.state ?? (isClientOnline(client) ? 'online' : 'offline');
+export const getClientStateLabel = (client: { state?: string | null; active?: boolean }): string =>
+  client?.state ?? (client?.active ? 'online' : 'offline');

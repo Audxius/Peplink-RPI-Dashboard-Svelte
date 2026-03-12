@@ -54,7 +54,6 @@ export const pollWanConnections = async () => {
             name: connection.name ?? `WAN ${id}`,
             status: connection.message ?? '-',
             enabled: connection.enable ?? false,
-            statusLed: connection.statusLed ?? '',
             ip: connection.ip ?? '-',
             type: connection.type ?? '-',
             uptime: connection.uptime ?? 0

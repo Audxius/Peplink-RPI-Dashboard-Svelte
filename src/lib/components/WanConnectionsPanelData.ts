@@ -1,20 +1,16 @@
 type WanStatus = 'connected' | 'disabled' | 'pending';
 
-type WanLike = {
+export const getWanStatusKind = (wan: {
   status?: string | null;
-  statusLed?: string | null;
   enabled?: boolean;
-};
-
-export const getWanStatusKind = (wan: WanLike): WanStatus => {
+}): WanStatus => {
   const statusText = (wan.status || '').toLowerCase();
-  const statusLed = (wan.statusLed || '').toLowerCase();
 
-  if (statusText.includes('connected') || statusLed === 'green') {
+  if (statusText.includes('connected')) {
     return 'connected';
   }
 
-  if (statusText.includes('disabled') || statusLed === 'gray' || wan?.enabled === false) {
+  if (statusText.includes('disabled') || wan.enabled === false) {
     return 'disabled';
   }
 
