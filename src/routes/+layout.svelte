@@ -6,6 +6,11 @@
 </script>
 
 <svelte:head>
+  <title>Peplink Dashboard</title>
+  <meta
+    name="description"
+    content="a dashboard for Peplink routers meant to run on Raspberry Pi with a 7-inch display"
+  />
   <link rel="icon" href={favicon} />
 </svelte:head>
 

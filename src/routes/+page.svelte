@@ -44,12 +44,14 @@
   });
 </script>
 
-<DashboardPanel />
-<div class="row">
-  <ApPanel apState={$apState} Toggle={toggleApState} />
-  <RouterResetPanel {Reset} />
-</div>
-<ClientsPanel clients={$clients} />
-<WanConnectionsPanel wanConnections={$wanConnections} {getWanStatusKind} />
-<LanProfilesPanel lanProfiles={$lanProfiles} />
-<WanAllowancePanel wanAllowances={$wanAllowances} />
+<main>
+  <DashboardPanel />
+  <div class="row">
+    <ApPanel apState={$apState} Toggle={toggleApState} />
+    <RouterResetPanel {Reset} />
+  </div>
+  <ClientsPanel clients={$clients} />
+  <WanConnectionsPanel wanConnections={$wanConnections} {getWanStatusKind} />
+  <LanProfilesPanel lanProfiles={$lanProfiles} />
+  <WanAllowancePanel wanAllowances={$wanAllowances} />
+</main>
