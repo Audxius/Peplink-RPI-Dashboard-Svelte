@@ -51,7 +51,7 @@
     <RouterResetPanel {Reset} />
   </div>
   <ClientsPanel clients={$clients} />
-  <WanConnectionsPanel wanConnections={$wanConnections} {getWanStatusKind} />
   <LanProfilesPanel lanProfiles={$lanProfiles} />
+  <WanConnectionsPanel wanConnections={$wanConnections} {getWanStatusKind} />
   <WanAllowancePanel wanAllowances={$wanAllowances} />
 </main>
