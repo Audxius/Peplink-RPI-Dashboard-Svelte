@@ -24,7 +24,6 @@
   }
 
   function closeKeyboardIfOutside(event) {
-    // Only close if click is outside both input and keyboard
     const keyboard = document.querySelector('.onscreen-keyboard');
     const inputs = Array.from(document.querySelectorAll('.auth-control'));
     if (
@@ -36,6 +35,15 @@
       keyboardTarget = null;
     }
   }
+
+  // Add event listener for outside click
+  import { onMount, onDestroy } from 'svelte';
+  onMount(() => {
+    window.addEventListener('mousedown', closeKeyboardIfOutside);
+    return () => {
+      window.removeEventListener('mousedown', closeKeyboardIfOutside);
+    };
+  });
 
   function handleKeyboardInput(key) {
     if (!keyboardTarget) return;
