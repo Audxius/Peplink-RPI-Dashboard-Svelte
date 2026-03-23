@@ -108,14 +108,14 @@ npm run build
 
 For developers, here is the short version:
 
-- [src/routes/login/+page.svelte](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/routes/login/+page.svelte): login screen
-- [src/routes/+page.svelte](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/routes/+page.svelte): main dashboard page
-- [src/routes/restarting/+page.svelte](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/routes/restarting/+page.svelte): waiting screen after reboot
-- [src/lib/api/ApiPostGet.ts](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/lib/api/ApiPostGet.ts): API helpers
-- [src/lib/api/endpoints.ts](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/lib/api/endpoints.ts): Peplink API paths used by the app
-- [src/lib/polling/polling.ts](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/lib/polling/polling.ts): auto-refresh logic
-- [src/lib/components](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/lib/components): dashboard panels and panel actions
-- [src/style/style.css](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/style/style.css): app styling
+- [src/routes/login/+page.svelte](/src/routes/login/+page.svelte): login screen
+- [src/routes/+page.svelte](/src/routes/+page.svelte): main dashboard page
+- [src/routes/restarting/+page.svelte](/src/routes/restarting/+page.svelte): waiting screen after reboot
+- [src/lib/api/ApiPostGet.ts](/src/lib/api/ApiPostGet.ts): API helpers
+- [src/lib/api/endpoints.ts](/src/lib/api/endpoints.ts): Peplink API paths used by the app
+- [src/lib/polling/polling.ts](/src/lib/polling/polling.ts): auto-refresh logic
+- [src/lib/components](/src/lib/components): dashboard panels and panel actions
+- [src/style/style.css](/src/style/style.css): app styling
 
 ## Common problems
 
