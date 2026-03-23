@@ -1,3 +1,4 @@
+import { goto } from '$app/navigation';
 import { get, writable } from 'svelte/store';
 import { apiPost } from '$lib/api/ApiPostGet';
 import { endpoints } from '$lib/api/endpoints';
@@ -45,14 +46,37 @@ export const authenticate = async (onSuccess: () => Promise<void>): Promise<bool
   return true;
 };
 
+export async function handleAuthenticate(): Promise<void> {
+  await authenticate(() => goto('/'));
+}
+
 export function openKeyboard(target: Field): void {
   showKeyboard.set(true);
   keyboardTarget.set(target);
 }
 
+export function handleFocus(target: Field): void {
+  openKeyboard(target);
+}
+
 export function closeKeyboard(): void {
   showKeyboard.set(false);
   keyboardTarget.set(null);
+}
+
+export function handleOutsideClick(event: MouseEvent): void {
+  const target = event.target;
+
+  if (!(target instanceof Element)) {
+    return;
+  }
+
+  const clickedKeyboard = target.closest('[data-login-surface="keyboard"]');
+  const clickedField = target.closest('[data-login-field]');
+
+  if (!clickedKeyboard && !clickedField) {
+    closeKeyboard();
+  }
 }
 
 export function toggleCaps(): void {

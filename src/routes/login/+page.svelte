@@ -1,55 +1,22 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
-  import { onMount } from 'svelte';
   import {
-    authenticate,
-    username,
-    password,
-    error,
-    showError,
-    showPassword,
-    showKeyboard,
     caps,
-    keyboardKeys,
-    openKeyboard,
-    closeKeyboard,
+    error,
+    handleAuthenticate,
+    handleFocus,
     handleKeyboardInput,
-    resolveDisplayKey
+    handleOutsideClick,
+    keyboardKeys,
+    password,
+    resolveDisplayKey,
+    showError,
+    showKeyboard,
+    showPassword,
+    username
   } from './login';
-
-  let keyboardElement: HTMLDivElement | null = null;
-  let usernameInput: HTMLInputElement | null = null;
-  let passwordInput: HTMLInputElement | null = null;
-
-  const handleAuthenticate = async () => {
-    await authenticate(() => goto('/'));
-  };
-
-  function handleFocus(target: 'username' | 'password') {
-    openKeyboard(target);
-  }
-
-  function handleOutsideClick(event: MouseEvent) {
-    const target = event.target as Node | null;
-    if (!target) return;
-
-    const clickedKeyboard = keyboardElement?.contains(target) ?? false;
-    const clickedUsername = usernameInput === target;
-    const clickedPassword = passwordInput === target;
-
-    if (!clickedKeyboard && !clickedUsername && !clickedPassword) {
-      closeKeyboard();
-    }
-  }
-
-  onMount(() => {
-    window.addEventListener('mousedown', handleOutsideClick);
-
-    return () => {
-      window.removeEventListener('mousedown', handleOutsideClick);
-    };
-  });
 </script>
+
+<svelte:window on:mousedown={handleOutsideClick} />
 
 <div class="login-page">
   <div class="login-container">
@@ -58,7 +25,7 @@
 
       <form class="login-form" on:submit|preventDefault={handleAuthenticate}>
         <input
-          bind:this={usernameInput}
+          data-login-field="username"
           class="auth-control"
           type="text"
           placeholder="Username"
@@ -68,7 +35,7 @@
         />
 
         <input
-          bind:this={passwordInput}
+          data-login-field="password"
           class="auth-control"
           type={$showPassword ? 'text' : 'password'}
           placeholder="Password"
@@ -90,7 +57,7 @@
       </form>
 
       {#if $showKeyboard}
-        <div class="onscreen-keyboard" tabindex="-1" bind:this={keyboardElement}>
+        <div class="onscreen-keyboard" tabindex="-1" data-login-surface="keyboard">
           {#each keyboardKeys as row}
             <div class="keyboard-row">
               {#each row as key}

@@ -1,6 +1,6 @@
-<script>
-  export let apState = null;
-  export let Toggle = async () => {};
+<script lang="ts">
+  export let apState: boolean | null = null;
+  export let Toggle: () => Promise<void> = async () => {};
 </script>
 
 <div class="panel">
