@@ -35,6 +35,7 @@ h1 {
 }
 
 .onscreen-keyboard {
+  display: none;
   position: fixed;
   left: 0;
   bottom: 0;
@@ -47,7 +48,6 @@ h1 {
     0 -1px 2px #0004;
   padding: 12px 8px 12px 8px;
   z-index: 1000;
-  display: flex;
   flex-direction: column;
   gap: 8px;
   min-width: unset;
@@ -67,7 +67,7 @@ h1 {
 
 @media (any-pointer: coarse) {
   .onscreen-keyboard {
-    display: block;
+    display: flex !important;
   }
 
   ::-webkit-scrollbar {
@@ -82,12 +82,6 @@ h1 {
   ::-webkit-scrollbar-thumb {
     background: gray;
     border-radius: 10px;
-  }
-}
-
-@media (any-pointer: fine) {
-  .onscreen-keyboard {
-    display: none !important;
   }
 }
 
