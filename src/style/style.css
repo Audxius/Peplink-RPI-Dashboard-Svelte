@@ -65,7 +65,27 @@ h1 {
   gap: 8px;
 }
 
-@media (pointer: fine) {
+@media (any-pointer: coarse) {
+  .onscreen-keyboard {
+    display: block;
+  }
+
+  ::-webkit-scrollbar {
+    width: 75px;
+  }
+
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: gray;
+    border-radius: 10px;
+  }
+}
+
+@media (any-pointer: fine) {
   .onscreen-keyboard {
     display: none !important;
   }
@@ -154,22 +174,6 @@ body {
 
 * {
   font-family: 'Lucida Console', 'Courier New', monospace;
-}
-
-@media (pointer: coarse) {
-  ::-webkit-scrollbar {
-    width: 75px;
-  }
-
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px grey;
-    border-radius: 10px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: gray;
-    border-radius: 10px;
-  }
 }
 
 .clients-table {
