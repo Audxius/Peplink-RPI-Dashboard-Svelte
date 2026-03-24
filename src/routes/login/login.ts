@@ -76,6 +76,8 @@ export function handleOutsideClick(event: MouseEvent): void {
     return;
   }
 
+  // Keep the keyboard open while the user interacts with either an input field
+  // or the keyboard surface itself; close it when they tap elsewhere.
   const clickedKeyboard = target.closest('[data-login-surface="keyboard"]');
   const clickedField = target.closest('[data-login-field]');
 
@@ -108,6 +110,8 @@ function updateFieldValue(store: typeof username | typeof password, key: string)
     if (key === 'Space') return value + ' ';
     if (key === 'Caps') return value;
 
+    // Caps only affects alphabetic keys; digits and control keys should remain
+    // untouched so the touch keyboard mirrors a physical keyboard.
     const nextKey = isCaps && /^[a-z]$/i.test(key) ? key.toUpperCase() : key;
     return value + nextKey;
   });

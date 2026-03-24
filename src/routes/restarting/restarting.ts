@@ -14,6 +14,8 @@ const isTimeoutResponse = (data: RestartResponse): boolean => {
   const responseText = String(data.response ?? '').toLowerCase();
   const messageText = String(data.message ?? '').toLowerCase();
 
+  // During reboot the router can still answer HTTP requests with timeout-style
+  // payloads, so we treat those as "still restarting" instead of "recovered".
   return stat === 'fail' && (responseText.includes('timeout') || messageText.includes('timeout'));
 };
 
@@ -28,6 +30,8 @@ export const startRestartWatcher = (onRecovered: () => Promise<void> | void): ((
       return;
     }
 
+    // Redirect only after we have seen the router disappear once; otherwise a
+    // fast response on first load would incorrectly count as a completed reboot.
     if (sawRouterDown) {
       clearInterval(intervalId);
       await onRecovered();

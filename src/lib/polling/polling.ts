@@ -41,6 +41,8 @@ export const wanConnections = writable<WanConnection[]>([]);
 export const wanAllowances = writable<WanAllowance[]>([]);
 
 export const pollAccessControl = async () => {
+  // The client status endpoint is available on every dashboard load, so it
+  // doubles as a lightweight "session still valid?" check.
   const data = await apiGet(endpoints.client).catch(() => ({ stat: 'fail' }));
 
   if (data.stat === 'fail') {
@@ -63,6 +65,8 @@ export const pollLanProfiles = async () => {
   const response = data?.response ?? {};
   const order: Array<string | number> = Array.isArray(response.order) ? response.order : [];
 
+  // Peplink returns LAN profiles as an object keyed by ID plus a separate
+  // `order` array. We rebuild that into a render-friendly list here.
   const parsed: LanProfile[] = order.flatMap((id) => {
     const profile = response[String(id)];
     return profile ? [{ id, ip: profile.ip ?? '-', mask: profile.mask ?? '-' }] : [];
@@ -76,6 +80,8 @@ export const pollWanConnections = async () => {
   const response = data?.response ?? {};
   const order: Array<string | number> = Array.isArray(response.order) ? response.order : [];
 
+  // WAN responses follow the same "lookup object + order array" pattern as LAN
+  // profiles, so the dashboard normalizes them once before storing them.
   const parsed: WanConnection[] = order.flatMap((id) => {
     const connection = response[String(id)];
     return connection
@@ -106,6 +112,8 @@ export const pollWanAllowances = async () => {
   const response = data?.response ?? {};
   const order: Array<string | number> = Array.isArray(response.order) ? response.order : [];
 
+  // Allowance data is inconsistent across WAN types: some entries expose a
+  // single boolean, while cellular WANs can expose nested SIM targets.
   const parsed: WanAllowance[] = order.flatMap((wanId) => {
     const entry = response[String(wanId)];
     if (!entry || typeof entry !== 'object') return [];
