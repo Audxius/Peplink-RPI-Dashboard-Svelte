@@ -1,90 +1,290 @@
 # Peplink RPI Dashboard
 
-A lightweight web dashboard for monitoring and managing a Peplink router from a Raspberry Pi.
+This project is a simple web dashboard for a Peplink router.
 
-This project provides a simple browser-based interface to view network status and perform basic management tasks.
+It is built with SvelteKit and is meant to run in a browser, usually on a Raspberry Pi or another device connected to the same network as the router.
 
----
+The goal is straightforward:
 
-## Features
+- log in with your Peplink router account
+- see important router information on one screen
+- do a few common actions without digging through the router admin UI
 
-The dashboard aggregates key router information in one place:
+If you are not a developer, think of this project as a custom control panel for your router.
 
-- Wi-Fi / access point status  
-- Connected devices  
-- LAN profiles  
-- Internet (WAN) connections  
-- Internet (WAN) allowance  
-- Basic controls (e.g. reboot router, toggle access point)  
+## What this dashboard can do
 
-Data is automatically refreshed every 5 seconds.
+After logging in, the dashboard shows:
 
----
+- Access Point status
+- connected clients/devices
+- LAN profiles
+- WAN connections
+- WAN allowance information
+- a router reboot button
 
-## Requirements
+The page refreshes its data automatically every 5 seconds.
 
-- Peplink router with API access enabled  
-- Raspberry Pi (or any device on the same network)  
+## What this project is
 
-> Node.js is only required for manual setup. The install script installs it automatically.
+This is:
 
----
+- a frontend app built with SvelteKit
+- a local dashboard that talks to the router API
+- a project you can run on a Raspberry Pi, laptop, mini PC, or similar device
 
-## Quick Install (Raspberry Pi)
+This is not:
 
-Use the automated install script:
+- an official Peplink app
+- a cloud service
+- a plug-and-play installer in its current form
 
-1. Download `install.sh` from this repository
-2. Open a terminal in the download directory
-3. Run:
+Important: the old `README` mentioned an `install.sh` script, but that file is not in this repository right now.
 
-```bash
-chmod +x install.sh
-./install.sh
+## How it works
+
+The app sends requests to Peplink API endpoints such as:
+
+- `/api/login`
+- `/api/cmd.ap`
+- `/api/status.client`
+- `/api/status.lan.profile`
+- `/api/status.wan.connection`
+- `/api/status.wan.connection.allowance`
+- `/api/cmd.system.reboot`
+
+When running locally in development mode, Vite proxies `/api/...` requests to the router IP configured in [vite.config.ts](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/vite.config.ts).
+
+Right now that IP is:
+
+```ts
+https://192.168.50.1
 ```
 
-The script will:
-- Install all dependencies
-- Clone the project
-- Build the application
-- Configure autostart
+If your router uses a different address, you must change it before running the app.
 
-After completion, the system will reboot and launch the dashboard in kiosk mode.
+## What you need
 
----
+Minimum requirements:
 
-## Manual Setup
+- a Peplink router with API access available on your network
+- the router username and password
+- Node.js and npm installed on the machine running this app
 
-### 1. Clone the repository
+Recommended:
+
+- a Raspberry Pi if you want a dedicated always-on dashboard screen
+- a browser on the same network as the router
+
+## Quick start
+
+### 1. Clone the project
+
 ```bash
 git clone https://github.com/Audxius/Peplink-RPI-Dashboard-Svelte.git
 cd Peplink-RPI-Dashboard-Svelte
 ```
 
 ### 2. Install dependencies
+
 ```bash
 npm install
 ```
 
-### 3. Start the application
+### 3. Set your router IP
+
+Open [vite.config.ts](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/vite.config.ts) and find this part:
+
+```ts
+target: 'https://192.168.50.1'
+```
+
+Change it to your router address if needed. Example:
+
+```ts
+target: 'https://192.168.1.1'
+```
+
+Notes:
+
+- keep the `https://`
+- the app currently expects the router to be reachable directly from the machine running the dashboard
+- `secure: false` is already set, which helps if the router uses a self-signed certificate
+
+### 4. Start the app
+
 ```bash
 npm run dev
 ```
 
-### 4. Open in browser
-```
+### 5. Open it in your browser
+
+Usually:
+
+```text
 http://localhost:5173
 ```
 
----
+## How to log in
 
-## Login
+Use your normal Peplink router username and password.
 
-Use your Peplink router credentials.
+If login works, you will be sent to the dashboard page.
 
----
+If login fails, the app shows an error message.
 
-## Notes
+## What you will see on the dashboard
 
-- The install script is intended for Raspberry Pi environments running Wayland.
-- Ensure a stable internet connection during setup.
+### Dashboard header
+
+- a page title
+- a logout button
+
+### Access Point panel
+
+- shows whether the access point is `ON` or `OFF`
+- lets you toggle it
+
+### Router reset panel
+
+- lets you reboot the router
+- asks for confirmation first
+- shows a restart screen while the router comes back online
+
+### Clients panel
+
+Shows:
+
+- device name
+- whether the device is online or offline
+- IP address
+- connection type
+
+### LAN profiles panel
+
+Shows:
+
+- LAN profile ID
+- IP
+- subnet mask
+
+### WAN panel
+
+Shows:
+
+- WAN name
+- status
+- IP
+- type
+- uptime
+
+### WAN allowance panel
+
+Shows whether WAN allowance is enabled or disabled for each WAN or SIM target.
+
+## Useful commands
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run local development server:
+
+```bash
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+Preview the production build locally:
+
+```bash
+npm run preview
+```
+
+Run type and Svelte checks:
+
+```bash
+npm run check
+```
+
+Format the code:
+
+```bash
+npm run format
+```
+
+Check formatting without changing files:
+
+```bash
+npm run format:check
+```
+
+## Project structure
+
+For developers, here is the short version:
+
+- [src/routes/login/+page.svelte](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/routes/login/+page.svelte): login screen
+- [src/routes/+page.svelte](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/routes/+page.svelte): main dashboard page
+- [src/routes/restarting/+page.svelte](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/routes/restarting/+page.svelte): waiting screen after reboot
+- [src/lib/api/ApiPostGet.ts](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/lib/api/ApiPostGet.ts): API helpers
+- [src/lib/api/endpoints.ts](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/lib/api/endpoints.ts): Peplink API paths used by the app
+- [src/lib/polling/polling.ts](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/lib/polling/polling.ts): auto-refresh logic
+- [src/lib/components](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/lib/components): dashboard panels and panel actions
+- [src/style/style.css](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/style/style.css): app styling
+
+## Common problems
+
+### The login page loads, but login does not work
+
+Check:
+
+- the router IP in [vite.config.ts](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/vite.config.ts)
+- that your machine can reach the router on the network
+- that your username and password are correct
+- that the router API endpoints are available
+
+### The browser says it cannot connect to the app
+
+Check:
+
+- that `npm run dev` is still running
+- that you opened the correct local address, usually `http://localhost:5173`
+
+### The dashboard opens, then sends you back to login
+
+This usually means the router session is missing, expired, or the API request failed.
+
+### Router reboot seems stuck
+
+The app waits for the router to go down and come back before redirecting you. If the router takes longer than expected, stay on the restart page a bit longer and make sure the network connection has actually returned.
+
+## Current limitations
+
+- the router target is hardcoded in development config
+- production deployment is not fully documented in this repository yet
+- there is no installer script included right now
+- this project assumes familiarity with the Peplink router environment
+
+## Tech stack
+
+- Svelte 5
+- SvelteKit
+- TypeScript
+- Vite
+
+## In plain English
+
+If you want the shortest possible explanation:
+
+1. This app gives you a cleaner screen for checking a Peplink router.
+2. You run it on a device in the same network.
+3. You point it at your router IP.
+4. You log in with your router account.
+5. You monitor clients, WAN, LAN, and access point status from one page.
