@@ -6,7 +6,6 @@
     handleFocus,
     handleKeyboardInput,
     handleOutsideClick,
-    handleSubmit,
     keyboardKeys,
     password,
     resolveDisplayKey,
@@ -17,7 +16,7 @@
   } from './login';
 </script>
 
-<svelte:window on:mousedown={handleOutsideClick} />
+<svelte:window onmousedown={handleOutsideClick} />
 
 <div class="login-page">
   <div class="login-container">
@@ -26,8 +25,10 @@
 
       <form
         class="login-form"
-        onsubmit={handleSubmit}
-        on:submit|preventDefault={handleAuthenticate}
+        onsubmit={(e) => {
+          e.preventDefault();
+          handleAuthenticate();
+        }}
       >
         <input
           data-login-field="username"
@@ -36,7 +37,7 @@
           placeholder="Username"
           bind:value={$username}
           required
-          on:focus={() => handleFocus('username')}
+          onfocus={() => handleFocus('username')}
         />
 
         <input
@@ -46,7 +47,7 @@
           placeholder="Password"
           bind:value={$password}
           required
-          on:focus={() => handleFocus('password')}
+          onfocus={() => handleFocus('password')}
         />
 
         <label class="show-password-label" for="show-password">
@@ -72,7 +73,7 @@
                   <button
                     type="button"
                     class="keyboard-key spacebar"
-                    on:click={() => handleKeyboardInput(key)}
+                    onclick={() => handleKeyboardInput(key)}
                   >
                     Spacebar
                   </button>
@@ -81,7 +82,7 @@
                     type="button"
                     class="keyboard-key"
                     style="flex:1 1 0; min-width:0;"
-                    on:click={() => handleKeyboardInput(key)}
+                    onclick={() => handleKeyboardInput(key)}
                   >
                     {resolveDisplayKey(key, $caps)}
                   </button>
