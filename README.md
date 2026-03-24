@@ -4,7 +4,11 @@ This project is a simple web dashboard for a Peplink router.
 
 It is built with SvelteKit and is meant to run in a browser, usually on a Raspberry Pi or another device connected to the same network as the router.
 
+<<<<<<< HEAD
 The goal is straightforward:
+=======
+The goal is:
+>>>>>>> 5161d2399487c0447c889c2a9382ddf0b7331f8c
 
 - log in with your Peplink router account
 - see important router information on one screen
@@ -33,6 +37,7 @@ This is:
 - a local dashboard that talks to the router API
 - a project you can run on a Raspberry Pi, laptop, mini PC, or similar device
 
+<<<<<<< HEAD
 This is not:
 
 - an official Peplink app
@@ -78,6 +83,25 @@ Recommended:
 
 ## Quick start
 
+=======
+## What you need
+
+Minimum requirements:
+
+- a Peplink router with API access available on your network
+- the router username and password
+- Node.js and npm installed on the machine running this app
+
+Recommended:
+
+- a Raspberry Pi if you want a dedicated always-on dashboard screen
+- a browser on the same network as the router
+
+## Quick start
+
+If you're using a Raspberry Pi 5, run the install script which you can find under "Releases". If you're not using a Raspberry Pi 5 or would prefer to do it manually:
+
+>>>>>>> 5161d2399487c0447c889c2a9382ddf0b7331f8c
 ### 1. Clone the project
 
 ```bash
@@ -91,6 +115,7 @@ cd Peplink-RPI-Dashboard-Svelte
 npm install
 ```
 
+<<<<<<< HEAD
 ### 3. Set your router IP
 
 Open [vite.config.ts](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/vite.config.ts) and find this part:
@@ -112,12 +137,19 @@ Notes:
 - `secure: false` is already set, which helps if the router uses a self-signed certificate
 
 ### 4. Start the app
+=======
+### 3. Start the app
+>>>>>>> 5161d2399487c0447c889c2a9382ddf0b7331f8c
 
 ```bash
 npm run dev
 ```
 
+<<<<<<< HEAD
 ### 5. Open it in your browser
+=======
+### 4. Open it in your browser
+>>>>>>> 5161d2399487c0447c889c2a9382ddf0b7331f8c
 
 Usually:
 
@@ -129,6 +161,7 @@ http://localhost:5173
 
 Use your normal Peplink router username and password.
 
+<<<<<<< HEAD
 If login works, you will be sent to the dashboard page.
 
 If login fails, the app shows an error message.
@@ -190,6 +223,19 @@ Install dependencies:
 npm install
 ```
 
+=======
+## What you will see on the dashboard
+
+### Login 
+<img width="1920" height="1068" alt="login screen" src="https://github.com/user-attachments/assets/d8de5e64-006c-4631-9495-2832cd1f0c88" />
+
+### Dashboard 
+<img width="1901" height="822" alt="dashboard part 1" src="https://github.com/user-attachments/assets/9e980d88-f36d-47c2-a2ee-10abcce5e665" />
+<img width="1902" height="892" alt="dashboard part2" src="https://github.com/user-attachments/assets/8f299abd-dfdf-45fb-9558-dee705d86e5a" />
+
+## Useful commands
+
+>>>>>>> 5161d2399487c0447c889c2a9382ddf0b7331f8c
 Run local development server:
 
 ```bash
@@ -202,6 +248,7 @@ Build for production:
 npm run build
 ```
 
+<<<<<<< HEAD
 Preview the production build locally:
 
 ```bash
@@ -226,10 +273,13 @@ Check formatting without changing files:
 npm run format:check
 ```
 
+=======
+>>>>>>> 5161d2399487c0447c889c2a9382ddf0b7331f8c
 ## Project structure
 
 For developers, here is the short version:
 
+<<<<<<< HEAD
 - [src/routes/login/+page.svelte](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/routes/login/+page.svelte): login screen
 - [src/routes/+page.svelte](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/routes/+page.svelte): main dashboard page
 - [src/routes/restarting/+page.svelte](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/routes/restarting/+page.svelte): waiting screen after reboot
@@ -238,6 +288,16 @@ For developers, here is the short version:
 - [src/lib/polling/polling.ts](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/lib/polling/polling.ts): auto-refresh logic
 - [src/lib/components](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/lib/components): dashboard panels and panel actions
 - [src/style/style.css](/home/audrius/Desktop/Peplink-RPI-Dashboard-Svelte/src/style/style.css): app styling
+=======
+- [src/routes/login/+page.svelte](/src/routes/login/+page.svelte): login screen
+- [src/routes/+page.svelte](/src/routes/+page.svelte): main dashboard page
+- [src/routes/restarting/+page.svelte](/src/routes/restarting/+page.svelte): waiting screen after reboot
+- [src/lib/api/ApiPostGet.ts](/src/lib/api/ApiPostGet.ts): API helpers
+- [src/lib/api/endpoints.ts](/src/lib/api/endpoints.ts): Peplink API paths used by the app
+- [src/lib/polling/polling.ts](/src/lib/polling/polling.ts): auto-refresh logic
+- [src/lib/components](/src/lib/components): dashboard panels and panel actions
+- [src/style/style.css](/src/style/style.css): app styling
+>>>>>>> 5161d2399487c0447c889c2a9382ddf0b7331f8c
 
 ## Common problems
 
@@ -264,6 +324,7 @@ This usually means the router session is missing, expired, or the API request fa
 ### Router reboot seems stuck
 
 The app waits for the router to go down and come back before redirecting you. If the router takes longer than expected, stay on the restart page a bit longer and make sure the network connection has actually returned.
+<<<<<<< HEAD
 
 ## Current limitations
 
@@ -288,3 +349,5 @@ If you want the shortest possible explanation:
 3. You point it at your router IP.
 4. You log in with your router account.
 5. You monitor clients, WAN, LAN, and access point status from one page.
+=======
+>>>>>>> 5161d2399487c0447c889c2a9382ddf0b7331f8c
