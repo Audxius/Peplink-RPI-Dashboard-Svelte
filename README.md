@@ -4,7 +4,7 @@ This project is a simple web dashboard for a Peplink router.
 
 It is built with SvelteKit and is meant to run in a browser, usually on a Raspberry Pi or another device connected to the same network as the router.
 
-The goal is:
+The goal is to be able to:
 
 - log in with your Peplink router account
 - see important router information on one screen
@@ -24,14 +24,6 @@ After logging in, the dashboard shows:
 - a router reboot button
 
 The page refreshes its data automatically every 5 seconds.
-
-## What this project is
-
-This is:
-
-- a frontend app built with SvelteKit
-- a local dashboard that talks to the router API
-- a project you can run on a Raspberry Pi, laptop, mini PC, or similar device
 
 ## What you need
 
@@ -84,8 +76,11 @@ Use your normal Peplink router username and password.
 ## What you will see on the dashboard
 
 ### Login
+<img width="1920" height="1068" alt="login screen" src="https://github.com/user-attachments/assets/e2020fd8-2e4a-44da-8303-ad4c703efa5d" />
 
 ### Dashboard
+<img width="1901" height="822" alt="dashboard part 1" src="https://github.com/user-attachments/assets/8a361c6a-8563-4c3a-8742-c3c650790b3d" />
+<img width="1902" height="892" alt="dashboard part2" src="https://github.com/user-attachments/assets/0c420429-7e9b-4aa5-9ed9-816fdb5627c5" />
 
 ## Useful commands
 
