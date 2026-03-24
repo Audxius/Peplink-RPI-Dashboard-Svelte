@@ -24,15 +24,11 @@
     <div class="panel padding">
       <div class="welcome">Welcome</div>
 
-<<<<<<< ours
-<<<<<<< ours
-      <form class="login-form" onsubmit={handleSubmit}>
-=======
-      <form class="login-form" on:submit|preventDefault={handleAuthenticate}>
->>>>>>> theirs
-=======
-      <form class="login-form" on:submit|preventDefault={handleAuthenticate}>
->>>>>>> theirs
+      <form
+        class="login-form"
+        onsubmit={handleSubmit}
+        on:submit|preventDefault={handleAuthenticate}
+      >
         <input
           data-login-field="username"
           class="auth-control"
