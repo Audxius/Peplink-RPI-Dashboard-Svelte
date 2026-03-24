@@ -1,4 +1,6 @@
-export const isClientOnline = (client: { active?: boolean }): boolean => Boolean(client?.active);
+import type { RouterClient } from '$lib/polling/polling';
 
-export const getClientStateLabel = (client: { state?: string | null; active?: boolean }): string =>
+export const isClientOnline = (client: RouterClient): boolean => Boolean(client?.active);
+
+export const getClientStateLabel = (client: RouterClient): string =>
   client?.state ?? (client?.active ? 'online' : 'offline');

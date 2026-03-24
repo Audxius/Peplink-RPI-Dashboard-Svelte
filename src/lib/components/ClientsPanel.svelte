@@ -1,12 +1,7 @@
 <script lang="ts">
-  type Client = {
-    name?: string | null;
-    active?: boolean;
-    ip?: string | null;
-    connectionType?: string | null;
-  };
+  import type { RouterClient } from '$lib/polling/polling';
 
-  export let clients: Client[] = [];
+  export let clients: RouterClient[] = [];
 </script>
 
 <div class="panel">

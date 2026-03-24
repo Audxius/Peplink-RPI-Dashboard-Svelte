@@ -1,5 +1,7 @@
-<script>
-  export let wanAllowances = [];
+<script lang="ts">
+  import type { WanAllowance } from '$lib/polling/polling';
+
+  export let wanAllowances: WanAllowance[] = [];
 </script>
 
 <div class="panel">

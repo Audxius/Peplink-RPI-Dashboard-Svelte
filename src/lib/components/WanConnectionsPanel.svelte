@@ -1,18 +1,12 @@
 <script lang="ts">
-  type Wan = {
-    name?: string | null;
-    status?: string | null;
-    ip?: string | null;
-    type?: string | null;
-    uptime?: number | string | null;
-  };
+  import type { WanConnection } from '$lib/polling/polling';
 
   type WanStatus = 'connected' | 'disabled' | 'pending';
 
-  export let wanConnections: Wan[] = [];
-  export let getWanStatusKind: (wan: Wan) => WanStatus = () => 'pending';
+  export let wanConnections: WanConnection[] = [];
+  export let getWanStatusKind: (wan: WanConnection) => WanStatus = () => 'pending';
 
-  const formatUptime = (value: Wan['uptime']): string => {
+  const formatUptime = (value: WanConnection['uptime']): string => {
     const sec = Number(value) || 0;
     const h = Math.floor(sec / 3600);
     const m = Math.floor((sec % 3600) / 60);

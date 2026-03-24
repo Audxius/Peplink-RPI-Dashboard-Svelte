@@ -1,9 +1,8 @@
+import type { WanConnection } from '$lib/polling/polling';
+
 type WanStatus = 'connected' | 'disabled' | 'pending';
 
-export const getWanStatusKind = (wan: {
-  status?: string | null;
-  enabled?: boolean;
-}): WanStatus => {
+export const getWanStatusKind = (wan: WanConnection): WanStatus => {
   const statusText = (wan.status || '').toLowerCase();
 
   if (statusText.includes('connected')) {

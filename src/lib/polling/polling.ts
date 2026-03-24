@@ -3,11 +3,42 @@ import { apiGet } from '$lib/api/ApiPostGet';
 import { endpoints } from '$lib/api/endpoints';
 import { goto } from '$app/navigation';
 
+export type RouterClient = {
+  name?: string | null;
+  active?: boolean;
+  ip?: string | null;
+  connectionType?: string | null;
+  state?: string | null;
+};
+
+export type LanProfile = {
+  id: string | number;
+  ip: string;
+  mask: string;
+};
+
+export type WanConnection = {
+  id: string | number;
+  name: string;
+  status: string;
+  enabled: boolean;
+  ip: string;
+  type: string;
+  uptime: number;
+};
+
+export type WanAllowance = {
+  wanId: string | number;
+  wanName: string;
+  target: string;
+  enabled: boolean;
+};
+
 export const apState = writable<boolean | null>(null);
-export const clients = writable<any[]>([]);
-export const lanProfiles = writable<any[]>([]);
-export const wanConnections = writable<any[]>([]);
-export const wanAllowances = writable<any[]>([]);
+export const clients = writable<RouterClient[]>([]);
+export const lanProfiles = writable<LanProfile[]>([]);
+export const wanConnections = writable<WanConnection[]>([]);
+export const wanAllowances = writable<WanAllowance[]>([]);
 
 export const pollAccessControl = async () => {
   const data = await apiGet(endpoints.client).catch(() => ({ stat: 'fail' }));
@@ -32,7 +63,7 @@ export const pollLanProfiles = async () => {
   const response = data?.response ?? {};
   const order: Array<string | number> = Array.isArray(response.order) ? response.order : [];
 
-  const parsed = order.flatMap((id) => {
+  const parsed: LanProfile[] = order.flatMap((id) => {
     const profile = response[String(id)];
     return profile ? [{ id, ip: profile.ip ?? '-', mask: profile.mask ?? '-' }] : [];
   });
@@ -45,7 +76,7 @@ export const pollWanConnections = async () => {
   const response = data?.response ?? {};
   const order: Array<string | number> = Array.isArray(response.order) ? response.order : [];
 
-  const parsed = order.flatMap((id) => {
+  const parsed: WanConnection[] = order.flatMap((id) => {
     const connection = response[String(id)];
     return connection
       ? [
@@ -65,7 +96,7 @@ export const pollWanConnections = async () => {
   wanConnections.set(parsed);
 };
 
-const getWanNameById = (wanId: string | number) => {
+const getWanNameById = (wanId: string | number): string => {
   const match = get(wanConnections).find((wan) => String(wan.id) === String(wanId));
   return match?.name ?? `WAN ${wanId}`;
 };
@@ -75,7 +106,7 @@ export const pollWanAllowances = async () => {
   const response = data?.response ?? {};
   const order: Array<string | number> = Array.isArray(response.order) ? response.order : [];
 
-  const parsed = order.flatMap((wanId) => {
+  const parsed: WanAllowance[] = order.flatMap((wanId) => {
     const entry = response[String(wanId)];
     if (!entry || typeof entry !== 'object') return [];
 

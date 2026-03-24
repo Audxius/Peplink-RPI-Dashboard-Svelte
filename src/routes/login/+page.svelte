@@ -6,6 +6,7 @@
     handleFocus,
     handleKeyboardInput,
     handleOutsideClick,
+    handleSubmit,
     keyboardKeys,
     password,
     resolveDisplayKey,
@@ -23,7 +24,15 @@
     <div class="panel padding">
       <div class="welcome">Welcome</div>
 
+<<<<<<< ours
+<<<<<<< ours
+      <form class="login-form" onsubmit={handleSubmit}>
+=======
       <form class="login-form" on:submit|preventDefault={handleAuthenticate}>
+>>>>>>> theirs
+=======
+      <form class="login-form" on:submit|preventDefault={handleAuthenticate}>
+>>>>>>> theirs
         <input
           data-login-field="username"
           class="auth-control"

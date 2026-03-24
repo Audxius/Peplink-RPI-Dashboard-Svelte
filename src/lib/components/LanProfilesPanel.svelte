@@ -1,5 +1,7 @@
-<script>
-  export let lanProfiles = [];
+<script lang="ts">
+  import type { LanProfile } from '$lib/polling/polling';
+
+  export let lanProfiles: LanProfile[] = [];
 </script>
 
 <div class="panel">

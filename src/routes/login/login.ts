@@ -50,6 +50,11 @@ export async function handleAuthenticate(): Promise<void> {
   await authenticate(() => goto('/'));
 }
 
+export function handleSubmit(event: SubmitEvent): void {
+  event.preventDefault();
+  void handleAuthenticate();
+}
+
 export function openKeyboard(target: Field): void {
   showKeyboard.set(true);
   keyboardTarget.set(target);
